@@ -1,6 +1,6 @@
 portod
 portod-meta-root
-portoctl
+porto
 portotest
 *.o
 *.a

@@ -54,16 +54,16 @@ add_subdirectory(util)
 
 link_directories(${yandex-porto_BINARY_DIR})
 include_directories(${yandex-porto_BINARY_DIR}/api/cpp)
-add_library(porto STATIC util api/cpp/libporto.cpp)
-add_dependencies(porto util version.hpp)
+add_library(libporto STATIC util api/cpp/libporto.cpp)
+add_dependencies(libporto util version.hpp)
 
 add_executable(portod portod.cpp cgroup.cpp rpc.cpp container.cpp holder.cpp event.cpp task.cpp kvalue.cpp subsystem.cpp config.cpp container_value.cpp value.cpp data.cpp property.cpp qdisc.cpp context.cpp volume.cpp epoll.cpp client.cpp)
 add_dependencies(portod version.hpp)
-target_link_libraries(portod porto protobufs util ${PB} ${LIBNL} ${LIBNL_ROUTE} pthread rt)
+target_link_libraries(portod libporto protobufs util ${PB} ${LIBNL} ${LIBNL_ROUTE} pthread rt)
 
-add_executable(portoctl ${PYTHON_SOURCES} portoctl.cpp cli.cpp config.cpp portotop.cpp)
-add_dependencies(portoctl version.hpp)
-target_link_libraries(portoctl porto protobufs util ${PB} rt ${CURSES_LIBRARIES} ${LIBNL} ${LIBNL_ROUTE})
+add_executable(porto ${PYTHON_SOURCES} portoctl.cpp cli.cpp config.cpp portotop.cpp)
+add_dependencies(porto version.hpp)
+target_link_libraries(porto libporto protobufs util ${PB} rt ${CURSES_LIBRARIES} ${LIBNL} ${LIBNL_ROUTE})
 
 add_executable(portod-meta-root meta_root.cpp util/signal.cpp)
 add_dependencies(portod-meta-root version.hpp)
@@ -75,12 +75,12 @@ set(TEST_TARGETS "")
 if(ENABLE_TEST)
 	add_executable(portotest portotest.cpp config.cpp qdisc.cpp test/selftest.cpp test/stresstest.cpp test/fuzzytest.cpp test/test.cpp config.cpp)
 	add_dependencies(portotest version.hpp)
-	target_link_libraries(portotest porto protobufs util ${PB} ${LIBNL} ${LIBNL_ROUTE} pthread rt)
+	target_link_libraries(portotest libporto protobufs util ${PB} ${LIBNL} ${LIBNL_ROUTE} pthread rt)
 	set(TEST_TARGETS "portotest")
 endif()
 
 install(
-    TARGETS portod portoctl ${TEST_TARGETS} portod-meta-root
+    TARGETS portod porto ${TEST_TARGETS} portod-meta-root
     RUNTIME DESTINATION sbin
     LIBRARY DESTINATION lib
 )

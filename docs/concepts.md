@@ -15,8 +15,8 @@ if it should run the same software as before. It's a task of cluster management 
 * Porto is reliable.
 Porto strives to be reliable and don't loose containers, their states, exit codes, etc during Porto updates and even
 failures (whenever it's possible, of course).
-* Portoctl for manual operations, API for building infrastructure.
-Porto provides portoctl CLI tool, Python API and protobuf-based API. portoctl is intended to be convenient for
+* Porto for manual operations, API for building infrastructure.
+Porto provides porto CLI tool, Python API and protobuf-based API. porto is intended to be convenient for
 manual operations, but theirs behavior can change. API is more reliable and should be used to build
 software on top of Porto.
 * Porto supports various degrees of isolation (from containers running completely in host namespace to highly isolated containers).

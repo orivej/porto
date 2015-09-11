@@ -22,30 +22,30 @@ expect() {
 	fi
 }
 
-getver() { portoctl -v 2>&1 | grep server | awk '{print $2}'; }
+getver() { porto -v 2>&1 | grep server | awk '{print $2}'; }
 
 check_state() {
-	expect "$(portoctl list -1 | tr -d ' ')" = "$(echo -e 'a\na/b\nx\ny\nz\n')"
+	expect "$(porto list -1 | tr -d ' ')" = "$(echo -e 'a\na/b\nx\ny\nz\n')"
 
-	expect "$(portoctl get x command)" = "sleep 1000"
-	expect "$(portoctl get x isolate)" = "false"
-	expect "$(portoctl get x state)" = "running"
+	expect "$(porto get x command)" = "sleep 1000"
+	expect "$(porto get x isolate)" = "false"
+	expect "$(porto get x state)" = "running"
 
-	expect "$(portoctl get y command)" = "false"
-	expect "$(portoctl get y isolate)" = "true"
-	expect "$(portoctl get y state)" = "dead"
-	expect "$(portoctl dget y exit_status)" = "256"
+	expect "$(porto get y command)" = "false"
+	expect "$(porto get y isolate)" = "true"
+	expect "$(porto get y state)" = "dead"
+	expect "$(porto dget y exit_status)" = "256"
 
-	expect "$(portoctl get z command)" = "sleep 3000"
-	expect "$(portoctl get z isolate)" = "true"
-	expect "$(portoctl get z state)" = "stopped"
+	expect "$(porto get z command)" = "sleep 3000"
+	expect "$(porto get z isolate)" = "true"
+	expect "$(porto get z state)" = "stopped"
 
         # current stable version (1.9) reports invalid state
         # for meta containers; uncomment when stable is 1.16
-        #expect "$(portoctl get a state)" = "meta"
+        #expect "$(porto get a state)" = "meta"
 
-	expect "$(portoctl get a/b command)" = "sleep 4000"
-	expect "$(portoctl get a/b state)" = "running"
+	expect "$(porto get a/b command)" = "sleep 4000"
+	expect "$(porto get a/b state)" = "running"
 }
 
 cleanup_tc() {
@@ -56,12 +56,12 @@ cleanup_tc() {
 
 wait_porto() {
         echo "Waiting porto startup..."
-        # versions prior to 1.17 don't return error when portoctl
+        # versions prior to 1.17 don't return error when porto
         # can't connect to socket, just sleep here
         sleep 10
 
 #       for i in `seq 60`; do
-#               if portoctl list; then
+#               if porto list; then
 #                       return
 #               fi
 #
@@ -78,17 +78,17 @@ sudo restart yandex-porto
 wait_porto
 oldver="$(getver)"
 
-portoctl run x command='sleep 1000' isolate=false
-portoctl run y command='false'
+porto run x command='sleep 1000' isolate=false
+porto run y command='false'
 sleep 1 # wait y exit
 
-portoctl create z
-portoctl set z command sleep 3000
+porto create z
+porto set z command sleep 3000
 
-portoctl create a
-portoctl create a/b
-portoctl set a/b command sleep 4000
-portoctl start a/b
+porto create a
+porto create a/b
+porto set a/b command sleep 4000
+porto start a/b
 
 check_state
 
@@ -101,4 +101,4 @@ expect "$oldver" != "$newver"
 
 check_state
 
-portoctl destroy a x y z
+porto destroy a x y z

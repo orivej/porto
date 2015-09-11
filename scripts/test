@@ -79,17 +79,17 @@ getrate() {
 		[ -z "$ceil" ] || prop="$prop net_limit[$iface]=$ceil"
 	done
 
-	echo portoctl run $container command="iperf $iperf_opts -fk -c $HOST -p $PORT" $prop >&2
-	portoctl run $container command="iperf $iperf_opts -fk -c $HOST -p $PORT" $prop
+	echo porto run $container command="iperf $iperf_opts -fk -c $HOST -p $PORT" $prop >&2
+	porto run $container command="iperf $iperf_opts -fk -c $HOST -p $PORT" $prop
 	lsof -i TCP:8081 >&2
 
 	netdetails $container >&2
 
-	portoctl wait $container >/dev/null
-	ret=$(portoctl get $container stdout)
+	porto wait $container >/dev/null
+	ret=$(porto get $container stdout)
 	echo "$ret" >&2
 	netdetails $container >&2
-	portoctl destroy $container
+	porto destroy $container
 	kbits=$(echo "$ret" | grep '/sec' | awk '{print $7}')
 	mbytes=$(($kbits / 1000 / 8))
 	echo "kbits=$kbits mbytes=$mbytes" >&2
@@ -186,7 +186,7 @@ mvlantest() {
 	#ip link set dev macvlan0 up
 	#ip addr add $macvlan_ip/$host_mask dev macvlan0
 
-	portoctl exec ping command="ping $host_ip" net="macvlan $iface eth0" ip="eth0 $container_ip/$host_mask" default_gw="$default_gw"
+	porto exec ping command="ping $host_ip" net="macvlan $iface eth0" ip="eth0 $container_ip/$host_mask" default_gw="$default_gw"
 }
 
 fixcg() {

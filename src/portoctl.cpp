@@ -182,7 +182,7 @@ class TVolumeBuilder {
     }
 
     TError ImportLayer(const std::string &path, std::string &id) {
-        id = "portoctl-" + std::to_string(GetPid()) + "-" + std::to_string(LayerIdx++);
+        id = "porto-" + std::to_string(GetPid()) + "-" + std::to_string(LayerIdx++);
         std::cout << "Importing layer " << path << "..." << std::endl;
         int ret = Api->ImportLayer(id, path);
         if (ret)
@@ -1019,7 +1019,7 @@ public:
             stdoutFd = ptm;
             stderrFd = ptm;
         } else {
-            TmpDir = mkdtemp(strdup("/tmp/portoctl-exec-XXXXXX"));
+            TmpDir = mkdtemp(strdup("/tmp/porto-exec-XXXXXX"));
             if (!TmpDir) {
                 TError error(EError::Unknown, errno, "mkdtemp()");
                 PrintError(error, "Can't create temporary directory");
@@ -1822,7 +1822,7 @@ public:
 
         std::string name = "portctl-build-" + std::to_string(GetPid()) + "-" + script.BaseName();
 
-        char *TmpFile = strdup("/tmp/portoctl-build-XXXXXX");
+        char *TmpFile = strdup("/tmp/porto-build-XXXXXX");
         int fd = mkstemp(TmpFile);
         if (fd < 0) {
             perror("mkstemp");

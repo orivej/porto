@@ -22,5 +22,5 @@ This might be changed via net property, which isolates container from the host n
 # Examples
 
 ```
-portoctl exec trusty command='ip l' net='macvlan eth0 eth0'
+porto exec trusty command='ip l' net='macvlan eth0 eth0'
 ```

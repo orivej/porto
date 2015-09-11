@@ -9,7 +9,7 @@ usage() {
 	echo -e "\t-T\tDon't create tar archive"
 	echo -e "\t-c\tExecute check hook"
 	echo -e "\t-d\tRemove image after build (dry-run)"
-	echo -e "\t-v\tShow underlying portoctl commands"
+	echo -e "\t-v\tShow underlying porto commands"
 	echo -e "\t-C\tDon't destroy porto containers on failure (for debugging)"
 	exit 1
 	exit 1
@@ -94,8 +94,8 @@ cleanup() {
 trap cleanup EXIT
 
 pctl() {
-	say portoctl "$@"
-	cat /dev/null | portoctl "$@"
+	say porto "$@"
+	cat /dev/null | porto "$@"
 }
 
 pexec() { pctl exec ${CONTAINER}-sudo command="/bin/bash -c '$*'" user="root" group="root"; }

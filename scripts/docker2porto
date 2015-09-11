@@ -89,9 +89,9 @@ layers="#{layers.join(' ')}"
 root=""
 cleanup() {
   set +e
-  [ ! -z "$root" ] && portoctl vunlink $root
+  [ ! -z "$root" ] && porto vunlink $root
   for id in $layers; do
-    portoctl layer -R $id
+    porto layer -R $id
   done
 }
 trap cleanup EXIT
@@ -99,12 +99,12 @@ trap cleanup EXIT
 layers_prop=""
 dir=$(dirname $0)
 for id in $layers; do
-  portoctl layer -I $id "${dir}/${id}.tar.gz"
+  porto layer -I $id "${dir}/${id}.tar.gz"
   layers_prop="$layers_prop$id;"
 done
 
-root=$(portoctl vcreate -A backend=overlay layers="$layers_prop" $QUOTA)
-portoctl exec #{name} #{props} root=$root
+root=$(porto vcreate -A backend=overlay layers="$layers_prop" $QUOTA)
+porto exec #{name} #{props} root=$root
 END
 
   File.write(script, text)

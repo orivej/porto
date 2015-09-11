@@ -8,7 +8,7 @@ The main goal of Porto is to provide a convenient reliable interface over severa
 Linux kernel mechanism such as cgroups, namespaces, mounts, networking etc.
 Porto is intended to be used as a base for building large infrastructure projects.
 Porto provides protobuf-based interface via unix socket. C++ and Python APIs are included.
-A command line tool (portoctl) for managing Porto-containers is also provided.
+A command line tool (porto) for managing Porto-containers is also provided.
 
 Porto has the following key-features:
 * **Container hierarchies:** you can manage nested groups of containers, limit theirs
@@ -35,15 +35,15 @@ newer kernels (for instance, 3.18+ for OverlayFs) and even offstream patches.
 
 ```
 $ sudo portod &
-$ portoctl run my_container command='echo "Hello, world!"'
-$ portoctl wait my_container
-$ portoctl get my_container stdout
-$ portoctl get my_container exit_status
-$ portoctl destroy my_container
+$ porto run my_container command='echo "Hello, world!"'
+$ porto wait my_container
+$ porto get my_container stdout
+$ porto get my_container exit_status
+$ porto destroy my_container
 ```
 or
 ```
-$ portoctl exec my_container command='echo "Hello, world!"'
+$ porto exec my_container command='echo "Hello, world!"'
 ```
 
 # DOCUMENTATION #

@@ -1145,7 +1145,7 @@ static void TestContainerNamespaces(TPortoAPI &api) {
 
     Say() << "Check simple prefix" << std::endl;
     ExpectApiSuccess(api.SetProperty("c", "porto_namespace", "simple-prefix-"));
-    ExpectApiSuccess(api.SetProperty("c/d", "command", "portoctl create test"));
+    ExpectApiSuccess(api.SetProperty("c/d", "command", "porto create test"));
     AsRoot(api);
     ExpectApiSuccess(api.SetProperty("c/d", "user", "root"));
     ExpectApiSuccess(api.Start("c/d"));
@@ -1157,7 +1157,7 @@ static void TestContainerNamespaces(TPortoAPI &api) {
 
     Say() << "Check container prefix" << std::endl;
     ExpectApiSuccess(api.SetProperty("c", "porto_namespace", "c/"));
-    ExpectApiSuccess(api.SetProperty("c/d", "command", "portoctl create test"));
+    ExpectApiSuccess(api.SetProperty("c/d", "command", "porto create test"));
     ExpectApiSuccess(api.Start("c/d"));
     WaitContainer(api, "c/d");
     ExpectApiSuccess(api.Destroy("c/second-prefix-test"));

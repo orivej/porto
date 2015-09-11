@@ -15,5 +15,5 @@ This might be changed via root property, which isolates container from the host 
 mkdir /tmp/root
 mkdir /tmp/shared
 debootstrap --exclude=ubuntu-minimal,resolvconf --arch amd64 trusty /tmp/root http://mirror.yandex.ru/ubuntu
-portoctl exec trusty command=/bin/bash root=/tmp/root bind_dns=true bind='/tmp/shared /shared ro'
+porto exec trusty command=/bin/bash root=/tmp/root bind_dns=true bind='/tmp/shared /shared ro'
 ```

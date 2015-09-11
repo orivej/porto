@@ -2,17 +2,17 @@
 
 _porto_containers ()
 {
-	COMPREPLY=( $( compgen -W "$(portoctl list -1 2>/dev/null) / /porto $1" -- "$cur" ) )
+	COMPREPLY=( $( compgen -W "$(porto list -1 2>/dev/null) / /porto $1" -- "$cur" ) )
 	__ltrim_colon_completions "$cur"
 }
 
 _porto_volumes ()
 {
-	COMPREPLY=( $( compgen -W "$(portoctl vlist -1 2>/dev/null) $1" -- "$cur" ) )
+	COMPREPLY=( $( compgen -W "$(porto vlist -1 2>/dev/null) $1" -- "$cur" ) )
 	__ltrim_colon_completions "$cur"
 }
 
-_portoctl ()
+_porto ()
 {
 	local i cur prev ct=
 	local _porto_commands _porto_properies _porto_data
@@ -20,7 +20,7 @@ _portoctl ()
 	COMPREPLY=()
 	_get_comp_words_by_ref -n : cur prev words cword
 
-	i=$(portoctl 2>&1)
+	i=$(porto 2>&1)
 	_porto_commands=$(echo "$i" | awk '/^Command/ {f=1;next} !f { next } !NF { exit } /^  [^ ]/ { print $1 }')
 	_porto_volume_properies=$(echo "$i" | awk '/^Volume properties/ {f=1;next} !f { next } !NF { exit } /^  [^ ]/ { print $1 }')
 	_porto_properies=$(echo "$i" | awk '/^Property/ {f=1;next} !f { next } !NF { exit } /^  [^ ]/ { print $1 }')
@@ -92,7 +92,7 @@ _portoctl ()
 			;;
 		4)
 			compopt -o filenames
-			[ -z "$cur" ] && COMPREPLY=$(portoctl pget "${words[2]}" "${words[3]}" 2>/dev/null)
+			[ -z "$cur" ] && COMPREPLY=$(porto pget "${words[2]}" "${words[3]}" 2>/dev/null)
 			;;
 		esac
 		;;
@@ -152,7 +152,7 @@ _portoctl ()
 			COMPREPLY=( $( compgen -W "-I -M -R -L" -- "$cur" ) )
 			;;
 		3)
-			COMPREPLY=( $( compgen -W "$(portoctl layer -L 2>/dev/null)" -- "$cur" ) )
+			COMPREPLY=( $( compgen -W "$(porto layer -L 2>/dev/null)" -- "$cur" ) )
 			;;
 		4)
 			_filedir
@@ -162,4 +162,4 @@ _portoctl ()
 	esac
 }
 
-complete -F _portoctl portoctl
+complete -F _porto porto

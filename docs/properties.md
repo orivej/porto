@@ -45,9 +45,9 @@ Container properties define container environment, container data define contain
 # Examples
 
 ```
-portoctl run container command='ps auxf' env='a=b; c=d' isolate=false
-portoctl wait container
-portoctl get exit_status oom_killed state time
-portoctl get cpu_usage major_faults memory_usage
-portoctl destroy container
+porto run container command='ps auxf' env='a=b; c=d' isolate=false
+porto wait container
+porto get exit_status oom_killed state time
+porto get cpu_usage major_faults memory_usage
+porto destroy container
 ```
